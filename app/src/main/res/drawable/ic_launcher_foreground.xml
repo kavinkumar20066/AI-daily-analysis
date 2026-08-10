@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Background circle -->
+    <path
+        android:fillColor="#7C3AED"
+        android:pathData="M54,54m-54,0a54,54 0,1 1,108 0a54,54 0,1 1,-108 0" />
+    <!-- Chart/tracker icon -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M30,72 L30,52 L40,52 L40,72 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M45,72 L45,40 L55,40 L55,72 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M60,72 L60,58 L70,58 L70,72 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M75,72 L75,46 L85,46 L85,72 Z" />
+    <!-- Trend line -->
+    <path
+        android:strokeColor="#06B6D4"
+        android:strokeWidth="3"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M30,55 L45,43 L60,60 L75,49" />
+    <!-- Dots on trend line -->
+    <path
+        android:fillColor="#06B6D4"
+        android:pathData="M30,55m-3,0a3,3 0,1 1,6 0a3,3 0,1 1,-6 0" />
+    <path
+        android:fillColor="#06B6D4"
+        android:pathData="M45,43m-3,0a3,3 0,1 1,6 0a3,3 0,1 1,-6 0" />
+    <path
+        android:fillColor="#06B6D4"
+        android:pathData="M60,60m-3,0a3,3 0,1 1,6 0a3,3 0,1 1,-6 0" />
+    <path
+        android:fillColor="#06B6D4"
+        android:pathData="M75,49m-3,0a3,3 0,1 1,6 0a3,3 0,1 1,-6 0" />
+</vector>

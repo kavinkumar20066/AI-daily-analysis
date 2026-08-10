@@ -1,0 +1,106 @@
+<resources>
+    <string name="app_name">Daily Work Tracker</string>
+    <string name="app_tagline">Track. Improve. Grow.</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_activities">Activities</string>
+    <string name="nav_history">History</string>
+    <string name="nav_progress">Progress</string>
+    <string name="nav_settings">Settings</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard_greeting_morning">Good Morning</string>
+    <string name="dashboard_greeting_afternoon">Good Afternoon</string>
+    <string name="dashboard_greeting_evening">Good Evening</string>
+    <string name="dashboard_no_activities">No activities yet today.\nTap + to add one!</string>
+    <string name="dashboard_progress_title">Today\'s Progress</string>
+
+    <!-- Activity Form -->
+    <string name="add_activity">Add Activity</string>
+    <string name="edit_activity">Edit Activity</string>
+    <string name="save_activity">Save Activity</string>
+    <string name="activity_name">Activity Name</string>
+    <string name="activity_name_hint">e.g. Morning Run, Study Session</string>
+    <string name="category">Category</string>
+    <string name="date">Date</string>
+    <string name="start_time">Start Time</string>
+    <string name="end_time">End Time</string>
+    <string name="duration">Duration</string>
+    <string name="status">Status</string>
+    <string name="priority">Priority</string>
+    <string name="notes">Notes</string>
+    <string name="is_exercise">This is an exercise activity</string>
+    <string name="exercise_type">Exercise Type</string>
+    <string name="distance">Distance (km)</string>
+    <string name="calories">Calories Burned</string>
+
+    <!-- Validation -->
+    <string name="error_name_required">Activity name is required</string>
+    <string name="error_date_required">Date is required</string>
+    <string name="error_save_failed">Unable to save changes. Please try again.</string>
+
+    <!-- Excel / File Management -->
+    <string name="excel_no_file">Please upload Daily Work.xlsx</string>
+    <string name="excel_upload">Upload Excel File</string>
+    <string name="excel_replace">Replace File</string>
+    <string name="excel_save">Save to Excel</string>
+    <string name="excel_export">Export</string>
+    <string name="excel_share">Share</string>
+    <string name="excel_backup">Create Backup</string>
+    <string name="excel_invalid_file">The selected file is not a valid Excel workbook.</string>
+    <string name="excel_sheet_missing">The \"Daily Work\" worksheet was not found.</string>
+    <string name="excel_connected">Excel file connected</string>
+    <string name="excel_not_connected">No Excel file connected</string>
+
+    <!-- Delete Dialog -->
+    <string name="delete_title">Delete Activity?</string>
+    <string name="delete_message">This activity will be permanently removed from your tracker and Excel file.</string>
+    <string name="delete_confirm">Delete</string>
+    <string name="cancel">Cancel</string>
+
+    <!-- Status -->
+    <string name="status_completed">Completed</string>
+    <string name="status_in_progress">In Progress</string>
+    <string name="status_pending">Pending</string>
+    <string name="status_skipped">Skipped</string>
+
+    <!-- Priority -->
+    <string name="priority_high">High</string>
+    <string name="priority_medium">Medium</string>
+    <string name="priority_low">Low</string>
+
+    <!-- Categories -->
+    <string name="category_study">Study</string>
+    <string name="category_work">Work</string>
+    <string name="category_exercise">Exercise</string>
+    <string name="category_health">Health</string>
+    <string name="category_personal">Personal</string>
+    <string name="category_project">Project</string>
+    <string name="category_learning">Learning</string>
+    <string name="category_entertainment">Entertainment</string>
+    <string name="category_other">Other</string>
+
+    <!-- Progress -->
+    <string name="completion_rate">Completion Rate</string>
+    <string name="productivity_score">Productivity Score</string>
+    <string name="total_activities">Total Activities</string>
+    <string name="completed">Completed</string>
+    <string name="pending">Pending</string>
+    <string name="productive_hours">Productive Hours</string>
+
+    <!-- Settings -->
+    <string name="settings_notifications">Notifications</string>
+    <string name="settings_theme">Theme</string>
+    <string name="settings_theme_light">Light</string>
+    <string name="settings_theme_dark">Dark</string>
+    <string name="settings_theme_system">System Default</string>
+    <string name="settings_about">About</string>
+    <string name="settings_version">Version 1.0</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_name">Daily Reminders</string>
+    <string name="notification_channel_desc">Reminders to log your daily activities</string>
+    <string name="notification_title">Daily Work Tracker</string>
+    <string name="notification_body">Time to log today\'s activities! Keep your streak going 🚀</string>
+</resources>
