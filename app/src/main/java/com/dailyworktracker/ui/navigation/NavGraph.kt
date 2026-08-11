@@ -1,6 +1,7 @@
 package com.dailyworktracker.ui.navigation
 
 import androidx.compose.animation.*
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -117,11 +118,24 @@ fun AppNavigation() {
             }
         }
     ) { innerPadding ->
+
+        // ── Shared animation specs ────────────────────────────────────────────
+        val tabFadeIn     = fadeIn(tween(220))
+        val tabFadeOut    = fadeOut(tween(180))
+        val slideInRight  = slideInHorizontally(tween(300)) { it }
+        val slideOutLeft  = slideOutHorizontally(tween(300)) { -it }
+        val slideInLeft   = slideInHorizontally(tween(300)) { -it }
+        val slideOutRight = slideOutHorizontally(tween(300)) { it }
+
         NavHost(
-            navController   = navController,
-            startDestination = Screen.Home.route
+            navController    = navController,
+            startDestination = Screen.Home.route,
+            enterTransition     = { tabFadeIn },
+            exitTransition      = { tabFadeOut },
+            popEnterTransition  = { tabFadeIn },
+            popExitTransition   = { tabFadeOut }
         ) {
-            // ── Bottom Tab Destinations ───────────────────────────────────────
+            // ── Bottom Tab Destinations (fade crossfade) ──────────────────────
 
             composable(Screen.Home.route) {
                 HomeScreen(
@@ -169,9 +183,15 @@ fun AppNavigation() {
                 )
             }
 
-            // ── Detail Destinations ───────────────────────────────────────────
+            // ── Detail Destinations (slide from right on push, slide to right on back) ──
 
-            composable(Screen.AddActivity.route) {
+            composable(
+                route = Screen.AddActivity.route,
+                enterTransition    = { slideInRight },
+                exitTransition     = { slideOutLeft },
+                popEnterTransition = { slideInLeft },
+                popExitTransition  = { slideOutRight }
+            ) {
                 AddEditActivityScreen(
                     activityId = null,
                     onSaved = { navController.popBackStack() },
@@ -181,7 +201,11 @@ fun AppNavigation() {
 
             composable(
                 route = Screen.EditActivity.route,
-                arguments = listOf(navArgument("activityId") { type = NavType.StringType })
+                arguments = listOf(navArgument("activityId") { type = NavType.StringType }),
+                enterTransition    = { slideInRight },
+                exitTransition     = { slideOutLeft },
+                popEnterTransition = { slideInLeft },
+                popExitTransition  = { slideOutRight }
             ) { backstackEntry ->
                 val id = backstackEntry.arguments?.getString("activityId")
                 AddEditActivityScreen(
@@ -193,7 +217,11 @@ fun AppNavigation() {
 
             composable(
                 route = Screen.DailyActivities.route,
-                arguments = listOf(navArgument("dateStr") { type = NavType.StringType })
+                arguments = listOf(navArgument("dateStr") { type = NavType.StringType }),
+                enterTransition    = { slideInRight },
+                exitTransition     = { slideOutLeft },
+                popEnterTransition = { slideInLeft },
+                popExitTransition  = { slideOutRight }
             ) { backstackEntry ->
                 val dateStr = backstackEntry.arguments?.getString("dateStr") ?: LocalDate.now().toString()
                 DailyActivitiesScreen(
@@ -207,7 +235,11 @@ fun AppNavigation() {
 
             composable(
                 route = Screen.DailySummary.route,
-                arguments = listOf(navArgument("dateStr") { type = NavType.StringType })
+                arguments = listOf(navArgument("dateStr") { type = NavType.StringType }),
+                enterTransition    = { slideInRight },
+                exitTransition     = { slideOutLeft },
+                popEnterTransition = { slideInLeft },
+                popExitTransition  = { slideOutRight }
             ) { entry ->
                 DailySummaryScreen(
                     dateString = entry.arguments?.getString("dateStr") ?: LocalDate.now().toString(),
@@ -217,7 +249,11 @@ fun AppNavigation() {
 
             composable(
                 route = Screen.Weekly.route,
-                arguments = listOf(navArgument("startDate") { type = NavType.StringType })
+                arguments = listOf(navArgument("startDate") { type = NavType.StringType }),
+                enterTransition    = { slideInRight },
+                exitTransition     = { slideOutLeft },
+                popEnterTransition = { slideInLeft },
+                popExitTransition  = { slideOutRight }
             ) { entry ->
                 WeeklyScreen(
                     startDateString = entry.arguments?.getString("startDate")
@@ -228,7 +264,11 @@ fun AppNavigation() {
 
             composable(
                 route = Screen.MonthlyProgress.route,
-                arguments = listOf(navArgument("yearMonth") { type = NavType.StringType })
+                arguments = listOf(navArgument("yearMonth") { type = NavType.StringType }),
+                enterTransition    = { slideInRight },
+                exitTransition     = { slideOutLeft },
+                popEnterTransition = { slideInLeft },
+                popExitTransition  = { slideOutRight }
             ) { entry ->
                 MonthlyProgressScreen(
                     yearMonth = entry.arguments?.getString("yearMonth") ?: "",
@@ -238,7 +278,11 @@ fun AppNavigation() {
 
             composable(
                 route = Screen.YearlyProgress.route,
-                arguments = listOf(navArgument("year") { type = NavType.StringType })
+                arguments = listOf(navArgument("year") { type = NavType.StringType }),
+                enterTransition    = { slideInRight },
+                exitTransition     = { slideOutLeft },
+                popEnterTransition = { slideInLeft },
+                popExitTransition  = { slideOutRight }
             ) { entry ->
                 YearlyProgressScreen(
                     year   = entry.arguments?.getString("year") ?: "",
@@ -246,11 +290,23 @@ fun AppNavigation() {
                 )
             }
 
-            composable(Screen.ExcelManagement.route) {
+            composable(
+                route = Screen.ExcelManagement.route,
+                enterTransition    = { slideInRight },
+                exitTransition     = { slideOutLeft },
+                popEnterTransition = { slideInLeft },
+                popExitTransition  = { slideOutRight }
+            ) {
                 ExcelManagementScreen(onBack = { navController.popBackStack() })
             }
 
-            composable(Screen.SearchFilter.route) {
+            composable(
+                route = Screen.SearchFilter.route,
+                enterTransition    = { slideInRight },
+                exitTransition     = { slideOutLeft },
+                popEnterTransition = { slideInLeft },
+                popExitTransition  = { slideOutRight }
+            ) {
                 SearchFilterScreen(
                     onActivityClick = { id ->
                         navController.navigate(Screen.EditActivity.createRoute(id))

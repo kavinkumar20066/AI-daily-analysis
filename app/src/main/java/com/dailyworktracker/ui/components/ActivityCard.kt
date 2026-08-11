@@ -1,6 +1,8 @@
 package com.dailyworktracker.ui.components
 
 import androidx.compose.animation.*
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -21,6 +23,7 @@ import java.time.format.DateTimeFormatter
 
 /**
  * Reusable activity card used in Home, DailyActivities, and ActivitiesScreen.
+ * Animates in with a fade + upward slide on first composition.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -36,19 +39,31 @@ fun ActivityCard(
     val catColor    = categoryColor(activity.category)
     val priorityC   = priorityColor(activity.priority.name)
 
-    Card(
-        onClick = onClick,
-        modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
-        ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+    // Entrance animation: fade in + slide up from 24dp below
+    var visible by remember { mutableStateOf(false) }
+    LaunchedEffect(activity.id) { visible = true }
+
+    AnimatedVisibility(
+        visible = visible,
+        enter   = fadeIn(tween(250)) + slideInVertically(
+            animationSpec = spring(dampingRatio = 0.8f, stiffness = 400f)
+        ) { it / 4 },
+        exit    = fadeOut(tween(150))
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.Top
+        Card(
+            onClick = onClick,
+            modifier = modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(12.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surface
+            ),
+            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
         ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.Top
+            ) {
+
             // Left status accent bar
             Box(
                 modifier = Modifier
@@ -241,7 +256,8 @@ fun ActivityCard(
                 }
             }
         }
-    }
+        } // Card
+    } // AnimatedVisibility
 }
 
 /**

@@ -15,6 +15,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
@@ -114,11 +115,9 @@ fun HomeScreen(
                 }
             }
 
-            // ── Loading indicator ──────────────────────────────────────────────
+            // ── Loading shimmer (replaces content while Excel loads) ───────────
             if (excelState is ExcelUiState.Loading) {
-                item {
-                    LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
-                }
+                item { ShimmerLoadingContent() }
             }
 
             // ── Today's Progress Card ─────────────────────────────────────────
@@ -477,6 +476,140 @@ private fun EmptyTodayCard(onAdd: () -> Unit) {
                 Icon(Icons.Default.Add, contentDescription = null)
                 Spacer(Modifier.width(8.dp))
                 Text("Add First Activity")
+            }
+        }
+    }
+}
+
+// ─── Shimmer Loading ──────────────────────────────────────────────────────────
+
+/**
+ * Animated shimmer placeholder box.
+ * Uses an infinite sweep gradient that scrolls left-to-right to simulate loading.
+ */
+@Composable
+private fun ShimmerBox(
+    modifier: Modifier = Modifier,
+    height: androidx.compose.ui.unit.Dp = 16.dp
+) {
+    val shimmerColors = listOf(
+        MaterialTheme.colorScheme.surfaceVariant,
+        MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f),
+        MaterialTheme.colorScheme.surfaceVariant
+    )
+    val transition = rememberInfiniteTransition(label = "shimmer")
+    val translateAnim by transition.animateFloat(
+        initialValue = 0f,
+        targetValue  = 1000f,
+        animationSpec = infiniteRepeatable(
+            animation  = tween(900, easing = LinearEasing),
+            repeatMode = RepeatMode.Restart
+        ),
+        label = "shimmer_translate"
+    )
+    val brush = Brush.linearGradient(
+        colors = shimmerColors,
+        start  = Offset(translateAnim - 200f, 0f),
+        end    = Offset(translateAnim, 0f)
+    )
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(height)
+            .clip(RoundedCornerShape(8.dp))
+            .background(brush)
+    )
+}
+
+/**
+ * Shimmer skeleton shown while the Home dashboard data is loading.
+ * Mimics the shape of the TodayProgressCard + QuickStatsRow + activity cards.
+ */
+@Composable
+private fun ShimmerLoadingContent() {
+    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+        // Progress card skeleton
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            shape    = RoundedCornerShape(16.dp),
+            colors   = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surfaceVariant
+            )
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(20.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                ShimmerBox(height = 20.dp, modifier = Modifier.fillMaxWidth(0.5f))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(24.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    ShimmerBox(
+                        height = 100.dp,
+                        modifier = Modifier
+                            .size(100.dp)
+                            .clip(CircleShape)
+                    )
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        repeat(4) {
+                            ShimmerBox(height = 14.dp, modifier = Modifier.fillMaxWidth(0.8f))
+                        }
+                    }
+                }
+            }
+        }
+
+        // Quick stats skeleton
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            repeat(3) {
+                Card(
+                    modifier = Modifier.weight(1f),
+                    shape    = RoundedCornerShape(12.dp),
+                    colors   = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.surfaceVariant
+                    )
+                ) {
+                    Column(
+                        modifier = Modifier.padding(12.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        ShimmerBox(height = 24.dp, modifier = Modifier.size(24.dp))
+                        ShimmerBox(height = 12.dp)
+                        ShimmerBox(height = 20.dp, modifier = Modifier.fillMaxWidth(0.6f))
+                    }
+                }
+            }
+        }
+
+        // Activity card skeletons
+        repeat(3) {
+            Card(
+                modifier  = Modifier.fillMaxWidth(),
+                shape     = RoundedCornerShape(12.dp),
+                colors    = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.surfaceVariant
+                ),
+                elevation = CardDefaults.cardElevation(2.dp)
+            ) {
+                Column(
+                    modifier = Modifier.padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    ShimmerBox(height = 16.dp, modifier = Modifier.fillMaxWidth(0.7f))
+                    ShimmerBox(height = 12.dp, modifier = Modifier.fillMaxWidth(0.4f))
+                    ShimmerBox(height = 12.dp, modifier = Modifier.fillMaxWidth(0.55f))
+                }
             }
         }
     }

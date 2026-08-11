@@ -32,6 +32,15 @@
             </intent-filter>
         </activity>
 
+        <!-- BootReceiver: re-schedules notifications after device reboot -->
+        <receiver
+            android:name=".notification.BootReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
         <!-- FileProvider for sharing backup Excel files -->
         <provider
             android:name="androidx.core.content.FileProvider"
