@@ -1,53 +1,44 @@
 package com.dailyworktracker.ui.navigation
 
+import androidx.compose.ui.graphics.vector.ImageVector
+
 /**
  * All navigation destinations in the app.
  * Sealed class ensures compile-time exhaustiveness.
  */
 sealed class Screen(val route: String) {
-
-    // ─── Top-level (Bottom Nav) ───────────────────────────────────────────────
     object Home       : Screen("home")
     object Activities : Screen("activities")
-    object History    : Screen("history")
+    object Calendar   : Screen("calendar")
     object Progress   : Screen("progress")
     object Settings   : Screen("settings")
-
-    // ─── Detail / Secondary ───────────────────────────────────────────────────
-    object AddActivity : Screen("add_activity")
-
-    object EditActivity : Screen("edit_activity/{activityId}") {
-        fun createRoute(activityId: String) = "edit_activity/$activityId"
+    object AddActivity: Screen("add_activity")
+    object EditActivity     : Screen("edit_activity/{activityId}") {
+        fun createRoute(id: String) = "edit_activity/$id"
     }
-
-    object DailyActivities : Screen("daily_activities/{date}") {
-        fun createRoute(date: String) = "daily_activities/$date"
+    object DailyActivities  : Screen("daily/{dateStr}") {
+        fun createRoute(d: String) = "daily/$d"
     }
-
-    object DailySummary : Screen("daily_summary/{date}") {
-        fun createRoute(date: String) = "daily_summary/$date"
+    object DailySummary     : Screen("summary/{dateStr}") {
+        fun createRoute(d: String) = "summary/$d"
     }
-
-    object WeeklyView : Screen("weekly_view/{startDate}") {
-        fun createRoute(startDate: String) = "weekly_view/$startDate"
+    object Weekly           : Screen("weekly/{startDate}") {
+        fun createRoute(d: String) = "weekly/$d"
     }
-
-    object MonthlyProgress : Screen("monthly_progress/{yearMonth}") {
-        fun createRoute(yearMonth: String) = "monthly_progress/$yearMonth"
+    object MonthlyProgress  : Screen("monthly/{yearMonth}") {
+        fun createRoute(ym: String) = "monthly/$ym"
     }
-
-    object YearlyProgress : Screen("yearly_progress/{year}") {
-        fun createRoute(year: String) = "yearly_progress/$year"
+    object YearlyProgress   : Screen("yearly/{year}") {
+        fun createRoute(y: String) = "yearly/$y"
     }
-
-    object ExcelManagement : Screen("excel_management")
-    object SearchFilter    : Screen("search_filter")
+    object ExcelManagement  : Screen("excel_management")
+    object SearchFilter     : Screen("search")
 }
 
 /** Items shown in the bottom navigation bar. */
 data class BottomNavItem(
     val screen: Screen,
     val label: String,
-    val iconUnselected: Int, // drawable resource or use vector icon in composable
-    val iconSelected: Int
+    val selectedIcon: ImageVector,
+    val unselectedIcon: ImageVector
 )

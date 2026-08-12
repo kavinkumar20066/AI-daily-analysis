@@ -10,6 +10,7 @@ import com.dailyworktracker.data.repository.ActivityRepository
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import androidx.compose.material3.ExperimentalMaterial3Api
 
 data class DailySummaryData(
     val date: LocalDate,

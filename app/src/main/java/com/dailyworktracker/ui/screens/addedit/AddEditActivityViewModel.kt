@@ -53,7 +53,7 @@ class AddEditActivityViewModel(
     val endTime:        StateFlow<String>          = _endTime.asStateFlow()
     val duration:       StateFlow<String>          = _duration.asStateFlow()
     val status:         StateFlow<ActivityStatus>  = _status.asStateFlow()
-    val priority:       StateFlow<ActivityPriority>= _priority.asStateFlow()
+    val priority:       StateFlow<ActivityPriority> = _priority.asStateFlow()
     val notes:          StateFlow<String>          = _notes.asStateFlow()
     val isExercise:     StateFlow<Boolean>         = _isExercise.asStateFlow()
     val exerciseType:   StateFlow<String>          = _exerciseType.asStateFlow()

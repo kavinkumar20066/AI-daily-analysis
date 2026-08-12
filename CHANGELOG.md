@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2026-08-12]
+
+### Fixed
+- Fixed Kotlin compilation error in `NavGraph.kt` and `Screen.kt` by removing duplicate declarations and consolidating `Screen` and `BottomNavItem` into a single source of truth.
+- Fixed syntax error in `AddEditActivityViewModel.kt` variable declaration.
+- Added missing `ExperimentalMaterial3Api` import to `DailySummaryViewModel.kt`.
+- Removed missing `windowSplashScreenBrandingImage` reference from `themes.xml` to fix build errors.
+
+### Documentation
+- Completely overhauled `README.md` with structured sections, badges, architecture diagrams, and a clear workflow.
+- Added `CONTRIBUTING.md` with a detailed guide for new contributors.
+- Updated `PROJECT_STATUS.md` to reflect the latest fixes and documentation improvements.
+
 ## [1.3.0-dev] - 2026-08-11
 
 ### Added — Phase 11: UI/UX Polish & Make Runnable

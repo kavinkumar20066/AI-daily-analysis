@@ -1,104 +1,309 @@
+<div align="center">
+  
 # Daily Work Tracker
 
-## Project Overview
-Daily Work Tracker is a personal daily activity and productivity tracking application for Android. It allows users to log their daily tasks, categorize them, track time, and visualize their productivity through extensive analytics.
+*A privacy-focused Android productivity tracker that turns daily activities into meaningful insights while keeping your data under your control.*
 
-Unlike typical to-do list apps, this project serves as a life/work analytics tool, where the user's Excel file (`Daily Work.xlsx`) acts as the permanent source of truth for their data. The app connects to this file, ensuring users always retain full ownership of their data.
+[![Kotlin](https://img.shields.io/badge/Kotlin-1.9-blue.svg?logo=kotlin)](https://kotlinlang.org)
+[![Android](https://img.shields.io/badge/Android-Jetpack%20Compose-4CAF50?logo=android)](#)
+[![Material 3](https://img.shields.io/badge/UI-Material%203-FF4081)](#)
+[![Room](https://img.shields.io/badge/Database-Room-00C853)](#)
+[![Apache POI](https://img.shields.io/badge/Excel-Apache%20POI-C2185B)](#)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## Key Features
+</div>
 
-### 🟢 Completed
-- **Project Setup & Architecture**: Full Android project scaffold with MVVM and Room offline-first cache.
-- **Excel Engine Integration**: Full Apache POI implementation reading/writing to an external `.xlsx` file using the Android Storage Access Framework (SAF) and a temp-file safe write strategy.
-- **CRUD Operations**: Complete Add, Edit, Delete flows for activities with auto-calculated duration and rich form inputs.
-- **Dashboard**: Home screen with reactive daily progress, category breakdowns, quick stats, and animated shimmer loading state.
-- **Calendar & History**: Monthly productivity heatmap and date-scoped activity lists.
-- **Detailed Analytics**:
-  - Daily Summaries (highlights, areas to improve).
-  - Weekly View (7-day completion bars, productive hours).
-  - Monthly Progress (category distribution, exercise tracking).
-  - Yearly Overview (best month trophy, monthly trends).
-- **Search & Filter**: Debounced search and multi-filtering (status, category, exercise).
-- **Settings & Data Management**: Backup/export Excel data, manual sync controls.
-- **Notification Scheduler**: WorkManager-based daily reminders with an in-app toggle and Material3 time picker.
-- **Runtime Permission Flow**: In-app rationale dialog + system `POST_NOTIFICATIONS` prompt for Android 13+, with graceful denial handling.
-- **UI/UX Animations**:
-  - Screen transitions: fade crossfade for tab switches; horizontal slide for detail/sub-screens.
-  - `ActivityCard` entrance: `AnimatedVisibility` fade-in + spring slide-up on each list item.
-  - `HomeScreen` shimmer: animated sweep-gradient skeleton placeholders while Excel data loads.
-- **Runnable Build**: `gradlew` + `gradlew.bat` wrapper scripts and `gradle-wrapper.jar` in place — project syncs and builds without errors in Android Studio.
+## Table of Contents
+- [Overview](#overview)
+- [Feature Showcase](#feature-showcase)
+- [Screenshots](#screenshots)
+- [How It Works](#how-it-works)
+- [Architecture & Data Flow](#architecture--data-flow)
+- [Project Structure](#project-structure)
+- [Technology Stack](#technology-stack)
+- [Installation Guide](#installation-guide)
+- [Commands](#commands)
+- [Data & Privacy](#data--privacy)
+- [Roadmap](#roadmap)
+- [Contributing](#contributing)
+- [License](#license)
 
-### ⚪ Low Priority / Future
-- **Advanced Charts**: Wire Vico library (already a dependency) into analytics screens for richer interactive charts.
-- **Performance**: Lazy loading improvements and database indexing tweaks.
+---
 
-## Technology Stack
-- **Frontend / UI**: Jetpack Compose (Material 3)
-- **Language**: Kotlin
-- **Architecture**: MVVM + Repository Pattern
-- **Local Cache**: Room Database
-- **Async Operations**: Kotlin Coroutines + StateFlow
-- **Background Scheduling**: WorkManager (`PeriodicWorkRequest`)
-- **Data Source / File Engine**: Apache POI (Excel `.xlsx` processing) + Storage Access Framework (SAF)
-- **Dependency Management**: Manual DI (AppContainer)
-- **Preferences**: DataStore
+## Overview
 
-## Project Architecture
-The application uses an offline-first MVVM architecture:
-- **UI Layer**: Jetpack Compose screens and ViewModels.
-- **Data Layer**:
-  - `ActivityRepository`: Coordinates between Room and Excel.
-  - `ExcelManager`: Handles low-level file I/O with Apache POI.
-  - `ActivityDao`: Room database interface for fast querying and caching.
-- **Data Flow**: Read from Room (fast UI). Writes go to Room first, then sync to Excel.
+### What is Daily Work Tracker?
+Daily Work Tracker is an advanced productivity analytics tool built specifically for Android. Unlike typical to-do lists, this application serves as a comprehensive life and work tracker. 
 
-## Project Structure
+It solves a core problem for power users: **Data Ownership**. Instead of locking your activities into a proprietary cloud database, Daily Work Tracker uses **your own Excel file (`.xlsx`)** as the permanent source of truth. You connect your file once, and the app seamlessly reads, caches, and syncs your data while providing rich visual analytics.
+
+### How Users Interact with the App
+1. **Connect:** Select your local `Daily Work.xlsx` file using the Android file picker.
+2. **Track:** Add your daily activities, set durations, and categorize them (e.g., Work, Study, Exercise).
+3. **Review:** Check off completed items or skip them.
+4. **Analyze:** Explore the progress tab for deep weekly, monthly, and yearly insights.
+5. **Remember:** Enable daily push notifications to remind you to log your work.
+
+---
+
+## Feature Showcase
+
+### 📊 Productivity Analytics
+- **Daily Summaries:** Quick highlights and areas for improvement for today.
+- **Weekly Progress:** 7-day completion bars and total productive hours.
+- **Monthly Analysis:** Category distribution and consistency tracking.
+- **Yearly Overview:** Long-term trends and "best month" highlights.
+
+### 📝 Activity Tracking
+- **CRUD Operations:** Create, Read, Update, Delete activities.
+- **Time Tracking:** Start/end times with auto-calculated durations.
+- **Categories:** Organize by type (Work, Personal, Exercise, etc.).
+- **Exercise Tracking:** Dedicated toggle for fitness tracking.
+
+### 📅 History & Discovery
+- **Calendar Heatmap:** Visual representation of productive days.
+- **Date-based Navigation:** easily browse past logs.
+
+### 🔎 Search & Filter
+- **Debounced Text Search:** Find tasks instantly.
+- **Advanced Filtering:** Filter by Status (Pending/Completed), Category, or Exercise.
+
+### 🔔 Notifications
+- **Daily Reminders:** Configurable push notifications.
+- **Smart Permissions:** Handles Android 13+ runtime notification permissions gracefully.
+- **Boot Persistence:** Reminders survive device reboots.
+
+### 💾 Data Management
+- **Excel First:** Reads and writes to `.xlsx` using Apache POI.
+- **Backup & Export:** Easily share or back up your Excel file.
+- **Manual Sync:** Force-sync data between the UI and your file.
+
+---
+
+## Screenshots
+
+*(Placeholder: Add screenshots to the `docs/images/` directory to showcase the UI)*
+
+<p align="center">
+  <img src="docs/images/home.png" width="200" alt="Home Screen">
+  <img src="docs/images/activities.png" width="200" alt="Activities Screen">
+  <img src="docs/images/analytics.png" width="200" alt="Analytics Screen">
+  <img src="docs/images/settings.png" width="200" alt="Settings Screen">
+</p>
+
+* **Home Screen:** Shows today's quick stats, a dynamic progress ring, and recent activities. Includes shimmer loading effects.*
+* **Activities Screen:** A paginated, animated list of all tasks.
+* **Analytics Screen:** Deep dives into your weekly and monthly productivity.
+* **Settings Screen:** Manage your Excel connection, configure notifications, and handle backups.*
+
+---
+
+## How It Works
+
+### User Workflow
 ```text
-app/src/main/java/com/dailyworktracker/
- ├── data/
- │    ├── db/            # Room Database, DAO, Converters
- │    ├── excel/         # ExcelManager (Apache POI logic)
- │    ├── model/         # DailyActivity entity, Enums
- │    ├── preferences/   # DataStore preferences
- │    └── repository/    # ActivityRepository
- ├── notification/       # DailyReminderWorker, NotificationScheduler, BootReceiver
- ├── ui/
- │    ├── components/    # Reusable UI (ActivityCard with animation, Dialogs)
- │    ├── navigation/    # NavGraph with full screen transitions (14 screens)
- │    ├── screens/       # Features (Activities, Calendar, Home, Progress, Search, Settings)
- │    ├── theme/         # Color, Type, Theme settings
- │    └── viewmodel/     # Shared ViewModels (ExcelViewModel)
- ├── DailyWorkTrackerApp.kt
- ├── AppContainer.kt
- └── MainActivity.kt
+Open App
+   ↓
+Connect Excel File via System Picker
+   ↓
+Load Existing Data (Shimmer Loading)
+   ↓
+Dashboard (View Today's Progress)
+   ↓
+Add / Edit Activities
+   ↓
+Track Progress (Weekly/Monthly)
+   ↓
+Configure Daily Reminder (Optional)
 ```
 
-## Installation and Setup
-1. Clone the repository:
+### Developer Workflow
+```text
+Clone Repository
+   ↓
+Open in Android Studio
+   ↓
+Gradle Sync (Downloads Apache POI)
+   ↓
+Build & Run on Emulator
+   ↓
+Test Features
+   ↓
+Commit & Push
+```
+
+---
+
+## Architecture & Data Flow
+
+Daily Work Tracker uses an **Offline-First MVVM** architecture. The Room database serves as a fast local cache so the UI never blocks while waiting for Excel file I/O.
+
+### Architecture Diagram
+
+```mermaid
+flowchart TD
+    UI[Jetpack Compose UI]
+    VM[ViewModels]
+    REPO[Activity Repository]
+    ROOM[Room Database]
+    DAO[Activity DAO]
+    EXCEL[Excel Manager]
+    POI[Apache POI]
+    FILE[Daily Work.xlsx]
+    DATASTORE[DataStore]
+    WORK[WorkManager]
+    NOTIFY[Notification System]
+
+    UI --> VM
+    VM --> REPO
+    REPO --> ROOM
+    ROOM --> DAO
+    REPO --> EXCEL
+    EXCEL --> POI
+    POI --> FILE
+    VM --> DATASTORE
+    WORK --> NOTIFY
+```
+
+### Data Lifecycle
+- **Read Flow:** UI observes `StateFlow` from the ViewModel. The Repository fetches data from `Room` for instant display, while `ExcelManager` parses the `.xlsx` file in the background and updates `Room`.
+- **Write Flow:** When an activity is added/edited, it is immediately saved to `Room` (updating the UI), and then the Repository queues a sync operation to write the change to the `Excel` file via SAF.
+- **Sync Flow:** Handled via a robust copy-to-temp-and-overwrite strategy to prevent SAF corruption during writes.
+
+---
+
+## Project Structure
+
+```text
+AI-daily-analysis/
+├── app/
+│   └── src/
+│       └── main/
+│           ├── java/com/dailyworktracker/
+│           │   ├── data/
+│           │   │   ├── db/            # Room Database & DAO
+│           │   │   ├── excel/         # ExcelManager (Apache POI)
+│           │   │   ├── model/         # Entities & Enums
+│           │   │   ├── preferences/   # DataStore
+│           │   │   └── repository/    # ActivityRepository
+│           │   ├── notification/      # WorkManager & BootReceiver
+│           │   ├── ui/
+│           │   │   ├── components/    # Reusable UI (Animated Cards)
+│           │   │   ├── navigation/    # NavGraph & Transitions
+│           │   │   ├── screens/       # Feature Screens
+│           │   │   ├── theme/         # Material 3 Theme
+│           │   │   └── viewmodel/     # Shared ViewModels
+│           │   ├── AppContainer.kt    # Manual DI Container
+│           │   ├── DailyWorkTrackerApp.kt
+│           │   └── MainActivity.kt    # Entry Point & Permissions
+│           └── res/                   # Drawables, Values, Strings
+├── gradle/                            # Gradle Wrapper
+├── CHANGELOG.md                       # Version History
+├── PROJECT_STATUS.md                  # Current Dev Status
+├── CONTRIBUTING.md                    # Contributor Guide
+├── build.gradle.kts                   # Project Build Config
+└── README.md
+```
+
+---
+
+## Technology Stack
+
+| Technology | Purpose |
+| :--- | :--- |
+| **Kotlin** | Application programming language |
+| **Jetpack Compose** | Modern declarative UI toolkit |
+| **Material 3** | Design system and components |
+| **Room** | Local SQLite database / offline cache |
+| **Apache POI** | Excel (`.xlsx`) parsing and manipulation |
+| **Kotlin Coroutines** | Asynchronous operations and concurrency |
+| **StateFlow** | Reactive state management |
+| **WorkManager** | Reliable background task scheduling (Notifications) |
+| **DataStore** | Type-safe shared preferences |
+| **Storage Access Framework** | Secure file access |
+
+---
+
+## Installation Guide
+
+1. **Install Android Studio** (Hedgehog 2023.1.1 or newer recommended).
+2. **Clone the repository:**
    ```bash
    git clone https://github.com/kavinkumar20066/AI-daily-analysis.git
    ```
-2. Open the project folder in **Android Studio** (Hedgehog 2023.1.1 or newer).
-3. Android Studio will detect `gradlew.bat` and prompt "Gradle project sync" — click **Sync Now**.
-4. Wait for Gradle to download dependencies (Apache POI is large — first sync may take 2–5 minutes).
-5. Run on an emulator (API 26+) or physical device via **Run ▶**.
+3. **Open the project** in Android Studio.
+4. **Allow Gradle Sync** to complete. *Note: Apache POI is a large dependency, so the first sync may take a few minutes.*
+5. **Connect an Emulator or Physical Device** (Minimum API 26).
+6. **Run the app** (`Shift + F10` or the Play button).
+7. Accept notification permissions when prompted (Android 13+).
+8. **Connect your Excel file** to start tracking!
 
-> **CLI build** (optional): After sync, you can also build from PowerShell:
-> ```powershell
-> .\gradlew.bat assembleDebug
-> ```
+---
 
-## Usage
-1. **Connect Data**: On the Home screen, tap the banner to upload your `Daily Work.xlsx` file.
-2. **Log Activities**: Use the `+` FAB to add tasks. Fill in times, categories, and exercise details.
-3. **Track Progress**: Navigate to the Progress tab to view Weekly, Monthly, and Yearly insights.
-4. **Enable Reminders**: Go to Settings → toggle Daily Notification on and pick a time.
-5. **Backup**: Go to Settings to manually back up or share your Excel file.
+## Commands
 
-## Future Enhancements
-- Data import/export from other formats (CSV, JSON).
-- Custom goal setting (e.g., "Exercise 3x a week").
-- Advanced charting using Vico (library already declared as a dependency).
+If you prefer to use the command line, you can use the included Gradle wrapper.
+
+### Build Debug APK
+**Windows:**
+```powershell
+.\gradlew.bat assembleDebug
+```
+**Linux / macOS:**
+```bash
+./gradlew assembleDebug
+```
+*The APK will be generated at: `app/build/outputs/apk/debug/app-debug.apk`*
+
+### Clean & Build
+```powershell
+.\gradlew.bat clean
+.\gradlew.bat assembleDebug
+```
+
+### Run Tests
+```powershell
+.\gradlew.bat test
+```
+
+---
+
+## Data & Privacy
+
+**100% Offline & Private:** 
+Daily Work Tracker is entirely offline. There is no remote backend, telemetry, or cloud database tracking your activities. 
+
+- **Data Storage:** Your data lives exclusively in two places:
+  1. The secure, internal App Sandbox (Room Cache).
+  2. The Excel file **you provide** on your device storage.
+- **Permissions:** 
+  - `POST_NOTIFICATIONS`: Requested strictly for daily reminders.
+  - File access is handled securely via the Android Storage Access Framework (SAF), meaning the app can *only* access the specific file you explicitly choose.
+
+---
+
+## Roadmap
+
+| Status | Feature |
+| :---: | :--- |
+| ✅ | Complete MVVM + Room architecture |
+| ✅ | Excel Engine integration via SAF |
+| ✅ | Activity CRUD and Time Tracking |
+| ✅ | Dashboard, Shimmer Loading, & UI Polish |
+| ✅ | Detailed Analytics (Weekly, Monthly, Yearly) |
+| ✅ | Notifications (WorkManager + Boot Receiver) |
+| 🚧 | Advanced Charting (Vico library integration) |
+| 📌 | Custom goals (e.g., "Exercise 3x a week") |
+| 📌 | CSV/JSON import & export |
+
+---
+
+## Contributing
+
+We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to set up the project, branch out, and submit a pull request.
+
+---
 
 ## License
-MIT License
+
+This project is licensed under the [MIT License](LICENSE).
